@@ -4,6 +4,7 @@
     "module": "NodeNext",
     "strict": true,
     "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "types": [
       "node"
