@@ -1,20 +1,31 @@
 {
   "name": "server",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch ./src/index.ts",
+    "start": "node index.js",
+    "buld": "tsc",
+    "gen": "drizzle-kit generate",
+    "migrate": "tsx src/drizzle/migrate.ts",
+    "push": "drizzle-kit push && tsx src/drizzle/migrate.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
   "dependencies": {
-    "@hono/node-server": "^1.13.7",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.4",
-    "hono": "^4.6.18",
     "pg": "^8.13.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17",
+    "@types/node": "^22.10.10",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.2",
-    "tsx": "^4.19.2"
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
   }
 }
