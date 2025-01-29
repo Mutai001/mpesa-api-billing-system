@@ -1,10 +1,14 @@
-import {integer,PgRole, pgTable, serial, text, timestamp, varchar} from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, integer, timestamp } from "drizzle-orm/pg-core";
 
-export const users = pgTable("users", {
-    id: serial().primaryKey().notNull(),
-    first_name:varchar("first_name",{ length: 255}).notNull(),
-    last_name:varchar("last_name",{length: 255}).notNull(),
-    role: varchar("role").default("user").notNull(),
-    email:varchar("email",{length: 255}).notNull(),
-    password:varchar("password",{length: 255}).notNull(),
-})
+export const payments = pgTable("payments", {
+  id: serial("id").primaryKey(),
+  phone: varchar("phone", { length: 15 }).notNull(),
+  amount: integer("amount").notNull(),
+  status: varchar("status", { length: 50 }).default("pending"),
+  transactionId: varchar("transaction_id", { length: 100 }),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+
+export type TIPayment = typeof payments.$inferInsert;
+export type TSPayment = typeof payments.$inferSelect;
