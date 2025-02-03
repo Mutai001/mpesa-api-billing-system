@@ -49,16 +49,16 @@ Content-Type: application/json
 {
   "Body": {
     "stkCallback": {
-      "MerchantRequestID": "MERCHANT1234",
-      "CheckoutRequestID": "CHECKOUT451",
-      "ResultCode": 0,
-      "ResultDesc": "The service request is processed successfully.",
+      "MerchantRequestID": "bbcd-4a89-bd1a-6ecdc639893b2273919",
+      "CheckoutRequestID": "ws_CO_03022025130928186722227154",
+      "ResultCode": "0",
+      "ResultDesc": "Success. Request accepted for processing",
       "CallbackMetadata": {
         "Item": [
-          { "Name": "MpesaReceiptNumber", "Value": "MPESA123456789" },
-          { "Name": "Amount", "Value": 1000 },
-          { "Name": "TransactionDate", "Value": "202407311530" },
-          { "Name": "PhoneNumber", "Value": "0722227152" }
+          { "Name": "MpesaReceiptNumber", "Value": "174379" },
+          { "Name": "Amount", "Value": 1 },
+          { "Name": "TransactionDate", "Value": "202502031530" },
+          { "Name": "PhoneNumber", "Value": "0722227154" }
         ]
       }
     }
