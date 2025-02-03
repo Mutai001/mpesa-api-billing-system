@@ -1,9 +1,26 @@
 import { Context } from "hono";
 import { stkPush } from "./mpesa.service";
 
+// export const initiateStkPush = async (c: Context) => {
+//     try {
+//         const { phone, amount } = await c.req.json();
+
+//         if (!phone || !amount) {
+//             return c.json({ error: "Phone number and amount are required" }, 400);
+//         }
+
+//         const response = await stkPush(phone, amount);
+//         return c.json(response, 200);
+//     } catch (error: any) {
+//         return c.json({ error: error?.message }, 500);
+//     }
+// };
+
 export const initiateStkPush = async (c: Context) => {
     try {
-        const { phone, amount } = await c.req.json();
+        const requestBody = await c.req.json();
+        console.log("Request Body:", requestBody);  // Debugging
+        const { phone, amount } = requestBody;
 
         if (!phone || !amount) {
             return c.json({ error: "Phone number and amount are required" }, 400);
@@ -12,9 +29,11 @@ export const initiateStkPush = async (c: Context) => {
         const response = await stkPush(phone, amount);
         return c.json(response, 200);
     } catch (error: any) {
+        console.error("STK Push Error:", error.response?.data || error.message);
         return c.json({ error: error?.message }, 500);
     }
 };
+
 
 // Callback handler
 export const stkCallback = async (c: Context) => {

@@ -3,12 +3,12 @@ POST http://localhost:8000/api/payments
 Content-Type: application/json
 
 {
-  "phone": "0722227154",
+  "phone": "0722227152",
   "amount": 5000,
   "status": "pending",
-  "transactionId": "MPESA123456789",
-  "merchantRequestId": "MERCHANT123",
-  "checkoutRequestId": "CHECKOUT456"
+  "transactionId": "MPESA123456783",
+  "merchantRequestId": "MERCHANT1234",
+  "checkoutRequestId": "CHECKOUT451"
 }
 
 ### Get All Payments
@@ -31,3 +31,36 @@ Content-Type: application/json
 ### Delete a Payment
 DELETE http://localhost:8000/api/payments/1
 Content-Type: application/json
+
+
+### Initiate Mpesa STK Push
+POST http://localhost:8000/api/mpesa/stkpush
+Content-Type: application/json
+
+{
+  "phone": "254722227154",
+  "amount": 1
+}
+
+### Simulate Mpesa STK Callback
+POST http://localhost:8000/api/mpesa/callback
+Content-Type: application/json
+
+{
+  "Body": {
+    "stkCallback": {
+      "MerchantRequestID": "MERCHANT1234",
+      "CheckoutRequestID": "CHECKOUT451",
+      "ResultCode": 0,
+      "ResultDesc": "The service request is processed successfully.",
+      "CallbackMetadata": {
+        "Item": [
+          { "Name": "MpesaReceiptNumber", "Value": "MPESA123456789" },
+          { "Name": "Amount", "Value": 1000 },
+          { "Name": "TransactionDate", "Value": "202407311530" },
+          { "Name": "PhoneNumber", "Value": "0722227152" }
+        ]
+      }
+    }
+  }
+}
