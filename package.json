@@ -19,18 +19,21 @@
   "dependencies": {
     "@hono/node-server": "^1.13.7",
     "@hono/prometheus": "^1.0.1",
+    "@neondatabase/serverless": "^0.10.4",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.4",
     "hono": "^4.6.19",
     "pg": "^8.13.1",
     "postgres": "^3.4.5",
+    "ws": "^8.18.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.4",
     "@types/node": "^22.10.10",
     "@types/pg": "^8.11.11",
+    "@types/ws": "^8.5.14",
     "drizzle-kit": "^0.30.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"

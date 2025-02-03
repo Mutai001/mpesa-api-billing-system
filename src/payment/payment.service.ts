@@ -18,9 +18,32 @@ export const getPaymentByIdService = async (payment_id: number): Promise<TSPayme
 
 // Create payment
 export const createPaymentService = async (payment: TIPayment): Promise<string> => {
-    await db.insert(payments).values(payment);
-    return "Payment created successfully";
+    console.log("=== ATTEMPTING TO INSERT PAYMENT ===");
+    console.log(payment);
+
+    try {
+        await db.insert(payments).values(payment);
+        console.log("=== PAYMENT INSERTED SUCCESSFULLY ===");
+        return "Payment created successfully";
+    } catch (error: any) {
+        console.error("Database Insert Error:", error.message);
+        throw new Error("Failed to insert payment");
+    }
 };
+
+
+// export const createPaymentService = async (payment: TIPayment): Promise<string> => {
+//     await db.insert(payments).values(payment);
+//     return "Payment created successfully";
+// };
+export const getPaymentByTransactionIdService = async (transactionId: string): Promise<TSPayment | undefined> => {
+    return await db.query.payments.findFirst({
+        where: eq(payments.transactionId, transactionId),
+    });
+};
+
+
+
 
 // Update payment
 export const updatePaymentService = async (payment_id: number, payment: TIPayment): Promise<string> => {
