@@ -8,8 +8,8 @@ import { trimTrailingSlash } from 'hono/trailing-slash'
 import { HTTPException } from 'hono/http-exception'
 import { timeout } from 'hono/timeout'
 
-import paymentRouter from './payment/payment.router'
-import mpesaRouter from './mpesa/mpesa.router'
+import paymentRouter from './payment/payment.router.js'
+import mpesaRouter from './mpesa/mpesa.router.js'
 
 
 const app = new Hono().basePath('/api')
