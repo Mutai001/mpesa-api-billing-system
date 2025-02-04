@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { stkPush } from "./mpesa.service";
-import { createPaymentService, getPaymentByTransactionIdService } from "../payment/payment.service"; // Added findPaymentByTransactionId
+import { stkPush } from "./mpesa.service.js";
+import { createPaymentService, getPaymentByTransactionIdService } from "../payment/payment.service.js"; // Added findPaymentByTransactionId
 export const initiateStkPush = (c) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {

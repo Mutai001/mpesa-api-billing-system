@@ -1,7 +1,7 @@
 import { Context } from "hono";
 import axios from "axios";
-import { stkPush } from "./mpesa.service";
-import { createPaymentService, getPaymentByTransactionIdService } from "../payment/payment.service"; // Added findPaymentByTransactionId
+import { stkPush } from "./mpesa.service.js";
+import { createPaymentService, getPaymentByTransactionIdService } from "../payment/payment.service.js"; // Added findPaymentByTransactionId
 
 export const initiateStkPush = async (c: Context) => {
     try {

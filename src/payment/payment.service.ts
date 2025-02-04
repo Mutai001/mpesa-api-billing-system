@@ -1,5 +1,5 @@
-import  db from "../drizzle/db";
-import { TIPayment, TSPayment, payments } from "../drizzle/schema";
+import  db from "../drizzle/db.js";
+import { TIPayment, TSPayment, payments } from "../drizzle/schema.js";
 import { eq } from "drizzle-orm";
 
 // Get all payments

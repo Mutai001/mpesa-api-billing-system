@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { initiateStkPush, stkCallback } from "./mpesa.controller";
+import { initiateStkPush, stkCallback } from "./mpesa.controller.js";
 
 const mpesaRouter = new Hono();
 

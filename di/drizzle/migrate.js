@@ -23,7 +23,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import "dotenv/config";
 // import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { migrate } from "drizzle-orm/neon-http/migrator";
-import db, { client } from "./db";
+import db, { client } from "./db.js";
 function migration() {
     return __awaiter(this, void 0, void 0, function* () {
         yield migrate(db, { migrationsFolder: __dirname + "/migrations" });

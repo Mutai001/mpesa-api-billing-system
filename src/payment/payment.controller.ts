@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { getAllPaymentsService, getPaymentByIdService, createPaymentService, updatePaymentService, deletePaymentService } from "./payment.service";
+import { getAllPaymentsService, getPaymentByIdService, createPaymentService, updatePaymentService, deletePaymentService } from "./payment.service.js";
 
 
 // Get all payments

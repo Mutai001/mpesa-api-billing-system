@@ -18,7 +18,7 @@ import "dotenv/config";
 import{neon} from "@neondatabase/serverless"
 import{ drizzle} from "drizzle-orm/neon-http"
 import { Client } from "pg";
-import * as schema from "./schema"
+import * as schema from "./schema.js"
 
 const sql = neon(process.env.Database_URL!);  //create a new neon instance
 

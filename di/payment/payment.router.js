@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { getAllPaymentsController, getPaymentByIdController, createPaymentController, updatePaymentController, deletePaymentController } from './payment.controller';
+import { getAllPaymentsController, getPaymentByIdController, createPaymentController, updatePaymentController, deletePaymentController } from './payment.controller.js';
 export const paymentRouter = new Hono();
 paymentRouter
     .get("payments", getAllPaymentsController)

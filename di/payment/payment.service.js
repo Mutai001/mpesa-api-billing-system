@@ -7,8 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import db from "../drizzle/db";
-import { payments } from "../drizzle/schema";
+import db from "../drizzle/db.js";
+import { payments } from "../drizzle/schema.js";
 import { eq } from "drizzle-orm";
 // Get all payments
 export const getAllPaymentsService = () => __awaiter(void 0, void 0, void 0, function* () {
