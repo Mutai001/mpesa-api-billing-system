@@ -5,7 +5,7 @@
     "rootDir": "./src",                                  /* Specify the root folder within your source files. */
     "moduleResolution": "nodenext",                                                /* Specify multiple folders that act like './node_modules/@types'. */
      "types": ["node"],                                                                 /* Disable emitting files from a compilation. */
-     "outDir": "./di",                                  /* Allow 'import x from y' when a module doesn't have a default export. */
+     "outDir": "./dist",                                  /* Allow 'import x from y' when a module doesn't have a default export. */
     "esModuleInterop": true,                                   /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
     "forceConsistentCasingInFileNames": true,         
     "strict": true,                                   /* Skip type checking .d.ts files that are included with TypeScript. */
