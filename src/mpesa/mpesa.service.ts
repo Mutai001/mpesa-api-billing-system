@@ -49,3 +49,6 @@ export const stkPush = async (phone: string, amount: number) => {
 
     return response.data;
 };
+
+
+//
