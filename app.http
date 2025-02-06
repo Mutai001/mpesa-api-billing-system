@@ -38,7 +38,7 @@ POST http://localhost:8000/api/mpesa/stkpush
 Content-Type: application/json
 
 {
-  "phone": "254722227154",
+  "phone": "254727498440",
   "amount": 1
 }
 

@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index",
+  "main": "index.js",
   "scripts": {
     "dev": "tsx watch ./src/index.ts",
-    "start": "node index",
+    "start": "node index.js",
     "build": "tsc",
     "gen": "drizzle-kit generate",
     "migrate": "tsx src/drizzle/migrate.ts",

@@ -17,7 +17,7 @@ export const getAllPaymentsController = async (c: Context) => {
 
 // Get payment by ID
 export const getPaymentByIdController = async (c: Context) => {
-    try {
+    try {   
         const id = parseInt(c.req.param("id"));
         if (isNaN(id)) {
             return c.text("Invalid id", 400);
