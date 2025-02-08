@@ -1,3 +1,4 @@
+//payment.controller.ts
 import { Context } from "hono";
 import { getAllPaymentsService, getPaymentByIdService, createPaymentService, updatePaymentService, deletePaymentService } from "./payment.service.js";
 

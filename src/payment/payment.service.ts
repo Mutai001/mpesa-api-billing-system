@@ -1,3 +1,4 @@
+//payment.service.ts
 import  db from "../drizzle/db.js";
 import { TIPayment, TSPayment, payments } from "../drizzle/schema.js";
 import { eq } from "drizzle-orm";

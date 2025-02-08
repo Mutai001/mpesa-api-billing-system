@@ -40,6 +40,7 @@ app.get('/metrics', printMetrics);
 app.route('/', paymentRouter);
 app.route('/mpesa', mpesaRouter);
 
+
 // Default route
 app.get('/', (c) => c.json({ message: 'Welcome to the API', routes: app.routes }));
 

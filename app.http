@@ -3,6 +3,7 @@ POST http://localhost:8000/api/payments
 Content-Type: application/json
 
 {
+  "id": 100,
   "phone": "0722227152",
   "amount": 5000,
   "status": "pending",
@@ -20,7 +21,7 @@ GET http://localhost:8000/api/payments/1
 Content-Type: application/json
 
 ### Update a Payment (Change Status)
-PATCH http://localhost:8000/api/payments/1
+PATCH http://localhost:8000/api/mpesa/payments/1
 Content-Type: application/json
 
 {
@@ -29,16 +30,15 @@ Content-Type: application/json
 }
 
 ### Delete a Payment
-DELETE http://localhost:8000/api/payments/19
+DELETE http://localhost:8000/api/mpesa/payments/19
 Content-Type: application/json
-
 
 ### Initiate Mpesa STK Push
 POST http://localhost:8000/api/mpesa/stkpush
 Content-Type: application/json
 
 {
-  "phone": "254727498440",
+  "phone": "254722227154",
   "amount": 1
 }
 
@@ -55,7 +55,7 @@ Content-Type: application/json
       "ResultDesc": "Success. Request accepted for processing",
       "CallbackMetadata": {
         "Item": [
-          { "Name": "MpesaReceiptNumber", "Value": "174379" },
+          { "Name": "MpesaReceiptNumber", "Value": "MPESA174379" },
           { "Name": "Amount", "Value": 1 },
           { "Name": "TransactionDate", "Value": "202502031530" },
           { "Name": "PhoneNumber", "Value": "254708374149" }
