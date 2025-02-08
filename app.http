@@ -21,7 +21,7 @@ GET http://localhost:8000/api/payments/1
 Content-Type: application/json
 
 ### Update a Payment (Change Status)
-PATCH http://localhost:8000/api/mpesa/payments/1
+PATCH http://localhost:8000/api/payments/1
 Content-Type: application/json
 
 {
@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ### Delete a Payment
-DELETE http://localhost:8000/api/mpesa/payments/19
+DELETE http://localhost:8000/api/payments/100
 Content-Type: application/json
 
 ### Initiate Mpesa STK Push
