@@ -23,8 +23,8 @@ export const createPaymentService = async (payment: TIPayment): Promise<string> 
     console.log(payment);
 
     try {
-        await db.insert(payments).values(payment);
-        console.log("=== PAYMENT INSERTED SUCCESSFULLY ===");
+        const result = await db.insert(payments).values(payment);
+        console.log("=== PAYMENT INSERTED SUCCESSFULLY ===", result);
         return "Payment created successfully";
     } catch (error: any) {
         console.error("Database Insert Error:", error.message);
@@ -33,10 +33,7 @@ export const createPaymentService = async (payment: TIPayment): Promise<string> 
 };
 
 
-// export const createPaymentService = async (payment: TIPayment): Promise<string> => {
-//     await db.insert(payments).values(payment);
-//     return "Payment created successfully";
-// };
+
 export const getPaymentByTransactionIdService = async (transactionId: string): Promise<TSPayment | undefined> => {
     return await db.query.payments.findFirst({
         where: eq(payments.transactionId, transactionId),

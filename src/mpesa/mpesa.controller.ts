@@ -18,6 +18,9 @@ export const initiateStkPush = async (c: Context) => {
 export const stkCallback = async (c: Context) => {
   try {
     const data = await c.req.json();
+    console.log("=== CALLBACK DATA RECEIVED ===");
+    console.log(JSON.stringify(data, null, 2));
+
     if (!data?.Body?.stkCallback) return c.json({ error: "Invalid callback data" }, 400);
 
     const callbackMetadata = data.Body.stkCallback.CallbackMetadata?.Item || [];
@@ -28,11 +31,19 @@ export const stkCallback = async (c: Context) => {
     const checkoutRequestId = data.Body.stkCallback.CheckoutRequestID;
     const status = data.Body.stkCallback.ResultCode === 0 ? "Success" : "Failed";
 
-    if (!transactionId) return c.json({ error: "Transaction ID missing" }, 400);
+    if (!transactionId) {
+      console.log("=== TRANSACTION ID MISSING FROM CALLBACK ===");
+      return c.json({ error: "Transaction ID missing" }, 400);
+    }
+
+    console.log("=== TRANSACTION DETAILS ===");
+    console.log({ phone, amount, transactionId, status });
 
     await createPaymentService({ phone, amount, transactionId, merchantRequestId, checkoutRequestId, status, createdAt: new Date() });
+
     return c.json({ message: "Callback processed successfully" }, 200);
   } catch (error: any) {
+    console.error("=== CALLBACK PROCESSING ERROR ===", error.message);
     return c.json({ error: error.message }, 500);
   }
 };

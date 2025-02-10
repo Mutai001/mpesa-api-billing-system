@@ -11,7 +11,8 @@
     "gen": "drizzle-kit generate",
     "migrate": "tsx src/drizzle/migrate.ts",
     "push": "drizzle-kit push && tsx src/drizzle/migrate.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "studio": "drizzle-kit studio"
   },
   "keywords": [],
   "author": "",
