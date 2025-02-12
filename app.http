@@ -1,5 +1,5 @@
 ### Create a New Payment
-POST http://localhost:8080/api/payments
+POSThttps://mpesa-api-billing-system.onrender.com/api/payments
 Content-Type: application/json
 
 {
@@ -13,15 +13,15 @@ Content-Type: application/json
 }
 
 ### Get All Payments
-GET http://localhost:8080/api/payments
+GET https://mpesa-api-billing-system.onrender.com/api/payments
 Content-Type: application/json
 
 ### Get a Single Payment by ID
-GET http://localhost:8080/api/payments/1
+GET https://mpesa-api-billing-system.onrender.com/api/payments/1
 Content-Type: application/json
 
 ### Update a Payment (Change Status)
-PATCH http://localhost:8080/api/payments/1
+PATCH https://mpesa-api-billing-system.onrender.com/api/payments/1
 Content-Type: application/json
 
 {
@@ -30,11 +30,11 @@ Content-Type: application/json
 }
 
 ### Delete a Payment
-DELETE http://localhost:8080/api/payments/16
+DELETE https://mpesa-api-billing-system.onrender.com/api/payments/16
 Content-Type: application/json
 
 ### Initiate Mpesa STK Push
-POST http://localhost:8080/api/mpesa/stkpush
+POST https://mpesa-api-billing-system.onrender.com/api/mpesa/stkpush
 Content-Type: application/json
 
 {
@@ -43,7 +43,7 @@ Content-Type: application/json
 }
 
 ### Simulate Mpesa STK Callback
-POST http://localhost:8080/api/mpesa/callback
+POST https://mpesa-api-billing-system.onrender.com/api/mpesa/callback
 Content-Type: application/json
 
 {
