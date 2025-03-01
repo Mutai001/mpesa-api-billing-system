@@ -1,49 +1,129 @@
-// M-Pesa Controller
-import { Context } from "hono";
-import { stkPush } from "./mpesa.service.js";
-import { createPaymentService } from "../payment/payment.service.js";
+import { Context } from 'hono';
+import { MpesaService } from './mpesa.service';
 
-export const initiateStkPush = async (c: Context) => {
-  try {
-    const { phone, amount } = await c.req.json();
-    if (!phone || !amount) return c.json({ error: "Phone number and amount are required" }, 400);
+export class MpesaController {
+  private mpesaService: MpesaService;
 
-    const response = await stkPush(phone, amount);
-    return c.json(response, 200);
-  } catch (error: any) {
-    return c.json({ error: error.message }, 500);
+  constructor() {
+    this.mpesaService = new MpesaService();
   }
-};
 
-export const stkCallback = async (c: Context) => {
-  try {
-    const data = await c.req.json();
-    console.log("=== CALLBACK DATA RECEIVED ===");
-    console.log(JSON.stringify(data, null, 2));
+  // Initiate STK Push payment
+  async initiatePayment(c: Context): Promise<Response> {
+    try {
+      const { phoneNumber, amount, referenceCode, description } = await c.req.json();
+      
+      // Validate inputs
+      if (!phoneNumber || !amount || !referenceCode) {
+        return c.json({
+          success: false,
+          message: 'Missing required fields: phoneNumber, amount, and referenceCode are required',
+        }, 400);
+      }
 
-    if (!data?.Body?.stkCallback) return c.json({ error: "Invalid callback data" }, 400);
+      // Ensure amount is a number
+      const parsedAmount = Number(amount);
+      if (isNaN(parsedAmount) || parsedAmount <= 0) {
+        return c.json({
+          success: false,
+          message: 'Amount must be a positive number',
+        }, 400);
+      }
 
-    const callbackMetadata = data.Body.stkCallback.CallbackMetadata?.Item || [];
-    const transactionId = callbackMetadata.find((item: any) => item.Name === "MpesaReceiptNumber")?.Value;
-    const phone = callbackMetadata.find((item: any) => item.Name === "PhoneNumber")?.Value;
-    const amount = callbackMetadata.find((item: any) => item.Name === "Amount")?.Value;
-    const merchantRequestId = data.Body.stkCallback.MerchantRequestID;
-    const checkoutRequestId = data.Body.stkCallback.CheckoutRequestID;
-    const status = data.Body.stkCallback.ResultCode === 0 ? "Success" : "Failed";
+      const result = await this.mpesaService.initiateSTKPush(
+        phoneNumber,
+        parsedAmount,
+        referenceCode,
+        description || 'Payment'
+      );
 
-    if (!transactionId) {
-      console.log("=== TRANSACTION ID MISSING FROM CALLBACK ===");
-      return c.json({ error: "Transaction ID missing" }, 400);
+      if (result.success) {
+        return c.json({
+          success: true,
+          message: 'STK Push initiated successfully',
+          data: result.data,
+        });
+      } else {
+        return c.json({
+          success: false,
+          message: result.error || 'Failed to initiate payment',
+        }, 500);
+      }
+    } catch (error: any) {
+      console.error('Payment initiation error:', error);
+      return c.json({
+        success: false,
+        message: error.message || 'Internal server error',
+      }, 500);
     }
-
-    console.log("=== TRANSACTION DETAILS ===");
-    console.log({ phone, amount, transactionId, status });
-
-    await createPaymentService({ phone, amount, transactionId, merchantRequestId, checkoutRequestId, status, createdAt: new Date() });
-
-    return c.json({ message: "Callback processed successfully" }, 200);
-  } catch (error: any) {
-    console.error("=== CALLBACK PROCESSING ERROR ===", error.message);
-    return c.json({ error: error.message }, 500);
   }
-};
+
+  // Handle M-Pesa callback
+  async handleCallback(c: Context): Promise<Response> {
+    try {
+      const callbackData = await c.req.json();
+      const success = await this.mpesaService.processCallback(callbackData);
+
+      if (success) {
+        return c.json({
+          success: true,
+          message: 'Callback processed successfully',
+        });
+      } else {
+        return c.json({
+          success: false,
+          message: 'Failed to process callback',
+        }, 500);
+      }
+    } catch (error: any) {
+      console.error('Callback handling error:', error);
+      return c.json({
+        success: false,
+        message: error.message || 'Internal server error',
+      }, 500);
+    }
+  }
+
+  // Get transaction status by checkout request ID
+  async getTransactionStatus(c: Context): Promise<Response> {
+    try {
+      const checkoutRequestId = c.req.param('checkoutRequestId');
+      const transaction = await this.mpesaService.getTransactionByCheckoutRequestId(checkoutRequestId);
+
+      if (transaction) {
+        return c.json({
+          success: true,
+          data: transaction,
+        });
+      } else {
+        return c.json({
+          success: false,
+          message: 'Transaction not found',
+        }, 404);
+      }
+    } catch (error: any) {
+      console.error('Get transaction error:', error);
+      return c.json({
+        success: false,
+        message: error.message || 'Internal server error',
+      }, 500);
+    }
+  }
+
+  // Get all transactions
+  async getAllTransactions(c: Context): Promise<Response> {
+    try {
+      const transactions = await this.mpesaService.getAllTransactions();
+      return c.json({
+        success: true,
+        data: transactions,
+      });
+    } catch (error: any) {
+      console.error('Get all transactions error:', error);
+      return c.json({
+        success: false,
+        message: error.message || 'Internal server error',
+      }, 500);
+    }
+  }
+}

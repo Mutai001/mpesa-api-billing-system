@@ -1,9 +1,9 @@
 ### Create a New Payment
-POSThttps://mpesa-api-billing-system.onrender.com/api/payments
+POST https://mpesa-api-billing-system.onrender.com/api/payments
 Content-Type: application/json
 
 {
-  "id": 100,
+  "id": 1,
   "phone": "0722227152",
   "amount": 5000,
   "status": "pending",
@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ### Delete a Payment
-DELETE https://mpesa-api-billing-system.onrender.com/api/payments/16
+DELETE https://mpesa-api-billing-system.onrender.com/api/payments/1
 Content-Type: application/json
 
 ### Initiate Mpesa STK Push

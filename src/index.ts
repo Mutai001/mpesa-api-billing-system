@@ -3,14 +3,12 @@ import { Hono } from 'hono'
 import "dotenv/config"
 import { logger } from 'hono/logger'
 import { csrf } from 'hono/csrf'
-import { prometheus } from '@hono/prometheus'
 import { trimTrailingSlash } from 'hono/trailing-slash'
 import { HTTPException } from 'hono/http-exception'
 import { timeout } from 'hono/timeout'
 
-import paymentRouter from './payment/payment.router.js'
+// Import Mpesa Router
 import mpesaRouter from './mpesa/mpesa.router.js'
-
 
 const app = new Hono().basePath('/api')
 
@@ -19,13 +17,10 @@ const customTimeoutException = () =>
     message: "Request timeout after waiting for more than 10 seconds",
   });
 
-const { printMetrics, registerMetrics } = prometheus();
-
 // Middlewares
 app.use(logger());
 app.use(csrf());
 app.use(trimTrailingSlash());
-app.use('*', registerMetrics);
 app.use('/', timeout(10000, customTimeoutException));
 
 // Health Check
@@ -34,12 +29,9 @@ app.get('/timeout', async (c) => {
     await new Promise((resolve) => setTimeout(resolve, 11000));
     return c.text("data after 5 seconds", 200);
 });
-app.get('/metrics', printMetrics);
 
 // Routes
-app.route('/', paymentRouter);
 app.route('/mpesa', mpesaRouter);
-
 
 // Default route
 app.get('/', (c) => c.json({ message: 'Welcome to the API', routes: app.routes }));
