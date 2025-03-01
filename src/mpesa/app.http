@@ -6,7 +6,7 @@
 # MPESA_CALLBACK_URL=https://your-callback-url.com/api/mpesa/callback
 # MPESA_API_URL=https://sandbox.safaricom.co.ke
 
-### Initiate STK Push Payment
+### Initiate STK Push Payment locally
 POST http://localhost:8000/api/mpesa/initiate
 Content-Type: application/json
 
@@ -16,12 +16,28 @@ Content-Type: application/json
   "referenceCode": "TEST123",
   "description": "Test Payment"
 }
+### Initiate STK Push Payment on Render
+POST https://mpesa-api-billing-system.onrender.com/api/mpesa/initiate
+Content-Type: application/json
 
-### Check Transaction Status (replace with actual checkoutRequestId)
+{
+  "phoneNumber": "254722227154",
+  "amount": 1,
+  "referenceCode": "TEST123",
+  "description": "Test Payment"
+}
+
+### Check Transaction Status (replace with actual checkoutRequestId) locally 
 GET http://localhost:8000/api/mpesa/transaction/ws_CO_DMZ_123456789_123456789
+
+### Check Transaction Status (replace with actual checkoutRequestId) on Render
+GET https://mpesa-api-billing-system.onrender.com/ws_CO_DMZ_123456789_123456789
 
 ### Get All Transactions
 GET http://localhost:8000/api/mpesa/transactions
+
+#### Get All Transactions on Render
+GET https://mpesa-api-billing-system.onrender.com/api/mpesa/transactions
 
 ### M-Pesa Callback Simulation (for testing locally)
 POST http://localhost:8000/api/mpesa/callback

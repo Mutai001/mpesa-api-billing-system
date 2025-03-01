@@ -6,6 +6,7 @@ import { csrf } from 'hono/csrf'
 import { trimTrailingSlash } from 'hono/trailing-slash'
 import { HTTPException } from 'hono/http-exception'
 import { timeout } from 'hono/timeout'
+import { cors } from 'hono/cors'  // ✅ Import CORS middleware
 
 // Import Mpesa Router
 import mpesaRouter from './mpesa/mpesa.router.js'
@@ -17,10 +18,17 @@ const customTimeoutException = () =>
     message: "Request timeout after waiting for more than 10 seconds",
   });
 
-// Middlewares
+// ✅ Apply Middlewares
 app.use(logger());
 app.use(csrf());
 app.use(trimTrailingSlash());
+app.use(cors({  // ✅ Enable CORS for all origins
+  origin: '*', 
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  exposeHeaders: ['Content-Length'],
+  maxAge: 600,
+}));
 app.use('/', timeout(10000, customTimeoutException));
 
 // Health Check
