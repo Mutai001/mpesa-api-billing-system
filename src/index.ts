@@ -6,30 +6,40 @@ import { csrf } from 'hono/csrf'
 import { trimTrailingSlash } from 'hono/trailing-slash'
 import { HTTPException } from 'hono/http-exception'
 import { timeout } from 'hono/timeout'
-import { cors } from 'hono/cors'  // ✅ Import CORS middleware
+import { cors } from 'hono/cors'
 
 // Import Mpesa Router
 import mpesaRouter from './mpesa/mpesa.router.js'
 
 const app = new Hono().basePath('/api')
 
-const customTimeoutException = () =>
+const customTimeoutException = () => 
   new HTTPException(408, {
     message: "Request timeout after waiting for more than 10 seconds",
   });
 
-// ✅ Apply Middlewares
+// Apply CORS middleware first before other middlewares to ensure it's processed for all requests
+// including preflight OPTIONS requests
+app.use('*', cors({
+  origin: '*',  // In production, you might want to restrict this to your frontend domain
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  exposeHeaders: ['Content-Length', 'X-Content-Type-Options'],
+  maxAge: 600,
+  credentials: true
+}));
+
+// Apply other middlewares
 app.use(logger());
 app.use(csrf());
 app.use(trimTrailingSlash());
-app.use(cors({  // ✅ Enable CORS for all origins
-  origin: '*', 
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization'],
-  exposeHeaders: ['Content-Length'],
-  maxAge: 600,
-}));
 app.use('/', timeout(10000, customTimeoutException));
+
+// Make sure CORS preflight requests are handled correctly
+app.options('*', (c) => {
+  return c.newResponse('', { status: 204 });
+});
+
 
 // Health Check
 app.get('/ok', (c) => c.text('The server is running ☑️'));
